@@ -1,0 +1,8 @@
+version: '3'
+services:
+  app:
+    image: ${{ secrets.DOCKER_HUB_USERNAME }}/simpleapp:latest
+    ports:
+      - "9900:9900"
+    restart: always
+
