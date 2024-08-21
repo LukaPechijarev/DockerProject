@@ -37,3 +37,21 @@ jobs:
         docker tag simpleapp pechijarevluka/simpleapp:latest
         docker push pechijarevluka/simpleapp:latest
 
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Pull Docker image from Docker Hub
+      run: |
+        docker pull pechijarevluka/simpleapp:latest
+
+    - name: Deploy Docker container
+      run: |
+        docker stop simpleapp || true
+        docker rm simpleapp || true
+        docker run -d --name simpleapp -p 9900:9900 pechijarevluka/simpleapp:latest
+
